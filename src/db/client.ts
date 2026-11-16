@@ -1,5 +1,6 @@
 import knex, { type Knex } from 'knex';
 import pg from 'pg';
+import { staticMigrationSource } from './migrations';
 
 // int8 defaults to string in node-postgres. Ledger amounts are safe integers.
 pg.types.setTypeParser(20, (value: string) => Number.parseInt(value, 10));
@@ -20,15 +21,12 @@ export function createDb(options: {
   });
 }
 
-export async function runMigrations(
-  db: Knex,
-  directory = 'migrations',
-): Promise<void> {
-  await db.migrate.latest({
-    directory,
-    extension: 'ts',
-    loadExtensions: ['.ts'],
-  });
+/**
+ * Applies pending migrations from the static source (see ./migrations.ts).
+ * The second argument is kept for call-site compatibility and ignored.
+ */
+export async function runMigrations(db: Knex, _directory?: string): Promise<void> {
+  await db.migrate.latest({ migrationSource: staticMigrationSource });
 }
 
 export async function truncateAll(db: Knex): Promise<void> {

@@ -453,6 +453,12 @@ Correções feitas nesta reverificação:
   existiam; foram criados;
 - pnpm ≥ 11 ignora `onlyBuiltDependencies`; `pnpm-workspace.yaml` agora declara também `allowBuilds`
   para `esbuild` e `protobufjs`.
+- **falha real no primeiro CI:** com Node 20 e banco vazio, o Knex carregava `migrations/001_init.ts`
+  via `import()` nativo e falhava com `Unknown file extension ".ts"`. Localmente não aparecia porque
+  a máquina usa Node 26 (que remove tipos nativamente) **e** o banco já estava migrado (o Knex só
+  importa migrations pendentes). Reproduzido com `npx -p node@20` + banco novo; corrigido com uma
+  fonte de migrations estática ([`src/db/migrations.ts`](src/db/migrations.ts)) que mantém os nomes
+  originais, então bancos já migrados não veem pendências.
 
 ## Reproduzindo os números
 
