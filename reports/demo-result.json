@@ -1,0 +1,46 @@
+{
+  "idempotency_key": "61deacfc-eb57-4bc2-b34b-f442e6dd337f",
+  "approval_id": "4d8e70cb-0910-4bc4-9a51-9f1047c7e940",
+  "trace_id": "56d2c4e37d0bce9eaca8d30ef9f79050",
+  "result": {
+    "status": "completed",
+    "answer": "Cobrança registrada: R$ 123,45 (transação 7bcf0621-5291-471c-b32e-e3bda580827a).",
+    "data": {
+      "transaction_id": "7bcf0621-5291-471c-b32e-e3bda580827a",
+      "tool": "create_charge",
+      "status": "captured",
+      "amount_cents": 12345,
+      "currency": "BRL",
+      "created_at": "2026-10-23T20:21:08.428Z",
+      "provider_ref": "sim_capture_1"
+    },
+    "tool_calls": [
+      {
+        "tool": "request_approval",
+        "ok": true
+      },
+      {
+        "tool": "create_charge",
+        "ok": true,
+        "replayed": false
+      }
+    ],
+    "documents": {
+      "scanned": 0,
+      "suspicious": 0,
+      "quarantined": 0,
+      "pii_documents": 0,
+      "categories": {},
+      "ids": []
+    },
+    "trace_id": "56d2c4e37d0bce9eaca8d30ef9f79050",
+    "model_path": "bounded-intent",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "model": "bounded-intent-deterministic"
+    },
+    "cost_usd": 0,
+    "pii_redactions": 0
+  }
+}

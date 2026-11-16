@@ -1,0 +1,46 @@
+{
+  "name": "payops-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Payment operations agent with a controlled blast radius: idempotent double-entry ledger, human approval, chaos and prompt-injection harnesses.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "migrate": "tsx scripts/migrate.ts",
+    "seed": "tsx scripts/seed.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:chaos": "vitest run tests/chaos",
+    "chaos": "tsx scripts/run-chaos.ts",
+    "injection": "tsx scripts/run-injection.ts",
+    "report:ledger": "tsx scripts/ledger-sweep.ts",
+    "trace:export": "tsx scripts/export-trace.ts",
+    "verify": "pnpm run typecheck && pnpm test && pnpm run chaos -- --runs 100 && pnpm run injection"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.0",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.57.2",
+    "@opentelemetry/resources": "^1.30.1",
+    "@opentelemetry/sdk-node": "^0.57.2",
+    "@opentelemetry/sdk-trace-base": "^1.30.1",
+    "@opentelemetry/semantic-conventions": "^1.30.0",
+    "hono": "^4.7.5",
+    "knex": "^3.1.0",
+    "pg": "^8.14.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@types/pg": "^8.11.11",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^2.1.9"
+  }
+}

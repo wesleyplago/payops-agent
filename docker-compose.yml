@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: payops
+      POSTGRES_PASSWORD: payops
+      POSTGRES_DB: payops
+    ports:
+      - "5432:5432"
+    volumes:
+      - payops_pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payops -d payops"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "4318:4318"     # OTLP/HTTP
+      - "4317:4317"     # OTLP/gRPC
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:14269/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+    environment:
+      PORT: "3000"
+      DATABASE_URL: postgres://payops:payops@postgres:5432/payops
+      APPROVER_SECRET: compose-approver-secret-change-me
+      AGENT_API_KEY: compose-agent-key-change-me
+      APPROVAL_TTL_MS: "60000"
+      APPROVAL_WAIT_MS: "20000"
+      OTEL_SERVICE_NAME: payops-agent
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      OTEL_TRACE_FILE: reports/otel-trace.json
+      SEND_PIX_ALLOWLIST: pix-demo-key,pix-vendor-001,pix-vendor-002
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./reports:/app/reports
+
+volumes:
+  payops_pgdata:

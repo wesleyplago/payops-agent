@@ -1,0 +1,279 @@
+{
+  "generated_at": "2026-11-16T12:23:04.338Z",
+  "config": {
+    "runs": 100,
+    "concurrency": 10,
+    "timeout_ms": 2000,
+    "seed": 20261023,
+    "model": "bounded-intent-deterministic",
+    "database": "postgres"
+  },
+  "summary": {
+    "executions": 100,
+    "successful_executions": 100,
+    "unrecovered_failures": 0,
+    "duplicate_charges": 0,
+    "duplicate_charge_rate": 0,
+    "ledger_invariant_violations": 0,
+    "orphan_outbox": 0,
+    "unpublished_outbox": 0,
+    "outbox_payload_mismatch": 0,
+    "duplicate_webhooks_handled": 6,
+    "p95_turn_ms": 40.22,
+    "p95_turn_ms_excluding_timeouts": 33.692,
+    "total_llm_tokens": 0,
+    "cost_per_decision_usd": 0,
+    "cost_basis": "no external inference: deterministic bounded-intent model reports 0 tokens; adapter supports provider usage"
+  },
+  "integrity": {
+    "checked_transactions": 177,
+    "ledger_violations": [],
+    "gateway": {
+      "calls": 189,
+      "deduplicated": 4,
+      "failures": 8
+    }
+  },
+  "by_scenario": [
+    {
+      "scenario": "none",
+      "executions": 50,
+      "recovered": 0,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 31.482,
+      "timed_out": 0
+    },
+    {
+      "scenario": "duplicate_webhook",
+      "executions": 6,
+      "recovered": 6,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 36.594,
+      "timed_out": 0
+    },
+    {
+      "scenario": "retry_after_success",
+      "executions": 9,
+      "recovered": 9,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 37.929,
+      "timed_out": 0
+    },
+    {
+      "scenario": "gateway_500_after_commit",
+      "executions": 7,
+      "recovered": 7,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 40.22,
+      "timed_out": 0
+    },
+    {
+      "scenario": "process_death_after_commit",
+      "executions": 12,
+      "recovered": 12,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 24.009,
+      "timed_out": 0
+    },
+    {
+      "scenario": "gateway_500_before_commit",
+      "executions": 8,
+      "recovered": 8,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 41.412,
+      "timed_out": 0
+    },
+    {
+      "scenario": "process_death_before_commit",
+      "executions": 4,
+      "recovered": 4,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 20.354,
+      "timed_out": 0
+    },
+    {
+      "scenario": "timeout_at_2s",
+      "executions": 4,
+      "recovered": 4,
+      "unrecovered": 0,
+      "duplicate_charges": 0,
+      "p95_ms": 2325.386,
+      "timed_out": 4
+    }
+  ],
+  "by_tool": [
+    {
+      "tool": "get_balance",
+      "executions": 15,
+      "failed": 0
+    },
+    {
+      "tool": "list_invoices",
+      "executions": 8,
+      "failed": 0
+    },
+    {
+      "tool": "create_charge",
+      "executions": 41,
+      "failed": 0
+    },
+    {
+      "tool": "refund",
+      "executions": 25,
+      "failed": 0
+    },
+    {
+      "tool": "send_pix",
+      "executions": 11,
+      "failed": 0
+    }
+  ],
+  "approval_reviews": {
+    "total": 221,
+    "denied": 0
+  },
+  "errors": [
+    {
+      "code": "SIMULATED_PROCESS_DEATH",
+      "count": 16
+    },
+    {
+      "code": "GATEWAY_ERROR",
+      "count": 15
+    },
+    {
+      "code": "CLIENT_TIMEOUT",
+      "count": 4
+    }
+  ],
+  "samples": [
+    {
+      "tool": "get_balance",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 16.815,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 0,
+      "logical_key": "66cd2046-c6a9-4a69-b175-a69e3e988d62"
+    },
+    {
+      "tool": "list_invoices",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 17.31,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 0,
+      "logical_key": "b771707f-fc05-4066-b712-4bd36cddf81e"
+    },
+    {
+      "tool": "get_balance",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 18.344,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 0,
+      "logical_key": "281f3626-9b23-4704-b971-01f1ad47818a"
+    },
+    {
+      "tool": "create_charge",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 31.482,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "76b249ce-8b44-4ff9-bc09-4e8dcbb87e88"
+    },
+    {
+      "tool": "refund",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 14.227,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "53735f3d-4a85-4e63-8802-fd5b559a3a3d"
+    },
+    {
+      "tool": "create_charge",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 33.645,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "0c17a4cc-b19e-4c84-a6de-99ede56e3ab5"
+    },
+    {
+      "tool": "send_pix",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 33.692,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "6fa916ca-09c8-4252-bf11-54eb88f7b0c0"
+    },
+    {
+      "tool": "send_pix",
+      "scenario": "none",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 15.892,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "c0a9ea1e-78f5-4ee7-861f-590fd19c2f52"
+    },
+    {
+      "tool": "create_charge",
+      "scenario": "duplicate_webhook",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "duration_ms": 36.594,
+      "timed_out": false,
+      "duplicate_webhook": true,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "cba4686d-f910-448a-ac29-246c0f0f6936"
+    },
+    {
+      "tool": "create_charge",
+      "scenario": "retry_after_success",
+      "eventual_ok": true,
+      "first_status": "completed",
+      "retry_status": "completed",
+      "duration_ms": 37.929,
+      "timed_out": false,
+      "duplicate_webhook": false,
+      "error_codes": [],
+      "tx_count": 1,
+      "logical_key": "f1cfaf09-548b-4ce6-9b1a-bcc216d5abc7"
+    }
+  ]
+}

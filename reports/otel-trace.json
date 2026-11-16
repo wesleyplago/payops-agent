@@ -1,0 +1,550 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "payops-agent"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "nodejs"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.30.1"
+            }
+          },
+          {
+            "key": "service.version",
+            "value": {
+              "stringValue": "1.0.0"
+            }
+          },
+          {
+            "key": "deployment.environment",
+            "value": {
+              "stringValue": "production"
+            }
+          },
+          {
+            "key": "process.pid",
+            "value": {
+              "intValue": "73"
+            }
+          },
+          {
+            "key": "process.executable.name",
+            "value": {
+              "stringValue": "/usr/local/bin/node"
+            }
+          },
+          {
+            "key": "process.executable.path",
+            "value": {
+              "stringValue": "/usr/local/bin/node"
+            }
+          },
+          {
+            "key": "process.command_args",
+            "value": {
+              "arrayValue": {
+                "values": [
+                  {
+                    "stringValue": "/usr/local/bin/node"
+                  },
+                  {
+                    "stringValue": "--require"
+                  },
+                  {
+                    "stringValue": "/app/node_modules/tsx/dist/preflight.cjs"
+                  },
+                  {
+                    "stringValue": "--import"
+                  },
+                  {
+                    "stringValue": "file:///app/node_modules/tsx/dist/loader.mjs"
+                  },
+                  {
+                    "stringValue": "/app/src/server.ts"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "key": "process.runtime.version",
+            "value": {
+              "stringValue": "20.20.2"
+            }
+          },
+          {
+            "key": "process.runtime.name",
+            "value": {
+              "stringValue": "nodejs"
+            }
+          },
+          {
+            "key": "process.runtime.description",
+            "value": {
+              "stringValue": "Node.js"
+            }
+          },
+          {
+            "key": "process.command",
+            "value": {
+              "stringValue": "/app/src/server.ts"
+            }
+          },
+          {
+            "key": "process.owner",
+            "value": {
+              "stringValue": "root"
+            }
+          },
+          {
+            "key": "host.name",
+            "value": {
+              "stringValue": "77d966160e11"
+            }
+          },
+          {
+            "key": "host.arch",
+            "value": {
+              "stringValue": "arm64"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "payops-agent",
+            "version": "1.0.0"
+          },
+          "spans": [
+            {
+              "traceId": "56d2c4e37d0bce9eaca8d30ef9f79050",
+              "spanId": "43f5d2de64d9fa2a",
+              "name": "http.request",
+              "kind": 0,
+              "startTimeUnixNano": "1792786868195000000",
+              "endTimeUnixNano": "1792786868449699833",
+              "attributes": [
+                {
+                  "key": "http.method",
+                  "value": {
+                    "stringValue": "POST"
+                  }
+                },
+                {
+                  "key": "http.route",
+                  "value": {
+                    "stringValue": "/v1/agent/execute"
+                  }
+                },
+                {
+                  "key": "http.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                },
+                {
+                  "key": "http.duration_ms",
+                  "value": {
+                    "doubleValue": 255.01625000000058
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            },
+            {
+              "traceId": "56d2c4e37d0bce9eaca8d30ef9f79050",
+              "spanId": "9afa819f0187a6c5",
+              "parentSpanId": "43f5d2de64d9fa2a",
+              "name": "tool.request_approval",
+              "kind": 0,
+              "startTimeUnixNano": "1792786868204000000",
+              "endTimeUnixNano": "1792786868425164708",
+              "attributes": [
+                {
+                  "key": "payops.tool",
+                  "value": {
+                    "stringValue": "request_approval"
+                  }
+                },
+                {
+                  "key": "payops.source",
+                  "value": {
+                    "stringValue": "http-agent"
+                  }
+                },
+                {
+                  "key": "payops.approval_id",
+                  "value": {
+                    "stringValue": "4d8e70cb-0910-4bc4-9a51-9f1047c7e940"
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            },
+            {
+              "traceId": "56d2c4e37d0bce9eaca8d30ef9f79050",
+              "spanId": "ec1b3285315d5fa2",
+              "parentSpanId": "43f5d2de64d9fa2a",
+              "name": "tool.create_charge",
+              "kind": 0,
+              "startTimeUnixNano": "1792786868426000000",
+              "endTimeUnixNano": "1792786868436627917",
+              "attributes": [
+                {
+                  "key": "payops.tool",
+                  "value": {
+                    "stringValue": "create_charge"
+                  }
+                },
+                {
+                  "key": "payops.source",
+                  "value": {
+                    "stringValue": "http-agent"
+                  }
+                },
+                {
+                  "key": "payops.amount_cents",
+                  "value": {
+                    "intValue": "12345"
+                  }
+                },
+                {
+                  "key": "payops.idempotency_key",
+                  "value": {
+                    "stringValue": "61deacfc-eb57-4bc2-b34b-f442e6dd337f"
+                  }
+                },
+                {
+                  "key": "payops.request_hash",
+                  "value": {
+                    "stringValue": "d22eff9fbecd8fab34fcc1f883236c62f4025a8809ddaa8b72083b4cf5c0e504"
+                  }
+                },
+                {
+                  "key": "payops.approval_token_present",
+                  "value": {
+                    "boolValue": true
+                  }
+                },
+                {
+                  "key": "payops.transaction_id",
+                  "value": {
+                    "stringValue": "7bcf0621-5291-471c-b32e-e3bda580827a"
+                  }
+                },
+                {
+                  "key": "payops.replayed",
+                  "value": {
+                    "boolValue": false
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "payops-agent"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "nodejs"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.30.1"
+            }
+          },
+          {
+            "key": "service.version",
+            "value": {
+              "stringValue": "1.0.0"
+            }
+          },
+          {
+            "key": "deployment.environment",
+            "value": {
+              "stringValue": "production"
+            }
+          },
+          {
+            "key": "process.pid",
+            "value": {
+              "intValue": "72"
+            }
+          },
+          {
+            "key": "process.executable.name",
+            "value": {
+              "stringValue": "/usr/local/bin/node"
+            }
+          },
+          {
+            "key": "process.executable.path",
+            "value": {
+              "stringValue": "/usr/local/bin/node"
+            }
+          },
+          {
+            "key": "process.command_args",
+            "value": {
+              "arrayValue": {
+                "values": [
+                  {
+                    "stringValue": "/usr/local/bin/node"
+                  },
+                  {
+                    "stringValue": "--require"
+                  },
+                  {
+                    "stringValue": "/app/node_modules/tsx/dist/preflight.cjs"
+                  },
+                  {
+                    "stringValue": "--import"
+                  },
+                  {
+                    "stringValue": "file:///app/node_modules/tsx/dist/loader.mjs"
+                  },
+                  {
+                    "stringValue": "/app/src/server.ts"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "key": "process.runtime.version",
+            "value": {
+              "stringValue": "20.20.2"
+            }
+          },
+          {
+            "key": "process.runtime.name",
+            "value": {
+              "stringValue": "nodejs"
+            }
+          },
+          {
+            "key": "process.runtime.description",
+            "value": {
+              "stringValue": "Node.js"
+            }
+          },
+          {
+            "key": "process.command",
+            "value": {
+              "stringValue": "/app/src/server.ts"
+            }
+          },
+          {
+            "key": "process.owner",
+            "value": {
+              "stringValue": "root"
+            }
+          },
+          {
+            "key": "host.name",
+            "value": {
+              "stringValue": "4a629481c2b2"
+            }
+          },
+          {
+            "key": "host.arch",
+            "value": {
+              "stringValue": "arm64"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "payops-agent",
+            "version": "1.0.0"
+          },
+          "spans": [
+            {
+              "traceId": "69ef367372373957659612fc12ad1a0a",
+              "spanId": "e07fffacb04e5360",
+              "name": "http.request",
+              "kind": 0,
+              "startTimeUnixNano": "1794831854742000000",
+              "endTimeUnixNano": "1794831855011283833",
+              "attributes": [
+                {
+                  "key": "http.method",
+                  "value": {
+                    "stringValue": "POST"
+                  }
+                },
+                {
+                  "key": "http.route",
+                  "value": {
+                    "stringValue": "/v1/agent/execute"
+                  }
+                },
+                {
+                  "key": "http.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                },
+                {
+                  "key": "http.duration_ms",
+                  "value": {
+                    "doubleValue": 269.445917
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            },
+            {
+              "traceId": "69ef367372373957659612fc12ad1a0a",
+              "spanId": "b6fb6183df9b4ef7",
+              "parentSpanId": "e07fffacb04e5360",
+              "name": "tool.request_approval",
+              "kind": 0,
+              "startTimeUnixNano": "1794831854752000000",
+              "endTimeUnixNano": "1794831854976159626",
+              "attributes": [
+                {
+                  "key": "payops.tool",
+                  "value": {
+                    "stringValue": "request_approval"
+                  }
+                },
+                {
+                  "key": "payops.source",
+                  "value": {
+                    "stringValue": "http-agent"
+                  }
+                },
+                {
+                  "key": "payops.approval_id",
+                  "value": {
+                    "stringValue": "c74b4ef4-b1a8-47aa-9c5b-50d8a29510fa"
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            },
+            {
+              "traceId": "69ef367372373957659612fc12ad1a0a",
+              "spanId": "af7aada4c8cd653b",
+              "parentSpanId": "e07fffacb04e5360",
+              "name": "tool.create_charge",
+              "kind": 0,
+              "startTimeUnixNano": "1794831854976000000",
+              "endTimeUnixNano": "1794831854995392125",
+              "attributes": [
+                {
+                  "key": "payops.tool",
+                  "value": {
+                    "stringValue": "create_charge"
+                  }
+                },
+                {
+                  "key": "payops.source",
+                  "value": {
+                    "stringValue": "http-agent"
+                  }
+                },
+                {
+                  "key": "payops.amount_cents",
+                  "value": {
+                    "intValue": "12345"
+                  }
+                },
+                {
+                  "key": "payops.idempotency_key",
+                  "value": {
+                    "stringValue": "84776049-68a6-408c-91ae-897d9548d3be"
+                  }
+                },
+                {
+                  "key": "payops.request_hash",
+                  "value": {
+                    "stringValue": "02a74a2815a45ae321a60d7d11a86d86af6dc9c79b933e4171f97888adb26830"
+                  }
+                },
+                {
+                  "key": "payops.approval_token_present",
+                  "value": {
+                    "boolValue": true
+                  }
+                },
+                {
+                  "key": "payops.transaction_id",
+                  "value": {
+                    "stringValue": "d4b21106-7e6a-46a3-a58f-e128c6f73f8c"
+                  }
+                },
+                {
+                  "key": "payops.replayed",
+                  "value": {
+                    "boolValue": false
+                  }
+                }
+              ],
+              "status": {
+                "code": 1
+              },
+              "events": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

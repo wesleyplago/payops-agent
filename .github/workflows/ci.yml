@@ -1,0 +1,81 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: typecheck + proof suites
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: payops
+          POSTGRES_PASSWORD: payops
+          POSTGRES_DB: payops_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U payops -d payops_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      TEST_DATABASE_URL: postgres://payops:payops@localhost:5432/payops_test
+      DATABASE_URL: postgres://payops:payops@localhost:5432/payops_test
+      APPROVER_SECRET: ci-approver-secret
+      AGENT_API_KEY: ci-agent-key-1234
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies without lifecycle scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Build native dependencies used by Vitest/tsx
+        run: pnpm rebuild esbuild protobufjs
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Unit and integration proof
+        run: pnpm exec vitest run tests/unit tests/integration
+
+      - name: Reduced chaos suite (100 executions, must stay under 5 minutes)
+        run: |
+          start=$(date +%s)
+          pnpm run test:chaos
+          end=$(date +%s)
+          echo "chaos_100_wall_seconds=$((end-start))" | tee chaos-wall.txt
+
+      - name: Prompt-injection corpus (120 cases)
+        run: pnpm run injection
+
+      - name: Upload proof reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: payops-reports
+          path: |
+            reports/
+            chaos-wall.txt
+          if-no-files-found: warn

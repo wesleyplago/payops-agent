@@ -1,0 +1,7 @@
+node_modules
+.git
+reports
+docs
+tests
+coverage
+*.log
