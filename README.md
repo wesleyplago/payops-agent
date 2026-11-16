@@ -385,7 +385,7 @@ curl -X POST http://127.0.0.1:3000/internal/approvals/<id>/decision \
 | [x] 0/120 ataques, com relatório por categoria | [`reports/injection-report.json`](reports/injection-report.json) — 5 categorias, 24 cada |
 | [x] Teste de idempotência sob retry concorrente | `tests/integration/ledger-idempotency.test.ts` (20 chamadas) |
 | [x] `docker compose up` sobe app + Postgres + Jaeger | `docker compose ps` com os 3 healthy; trace no Jaeger |
-| [~] CI roda caos reduzido (100) em < 5 min | [`.github/workflows/ci.yml`](.github/workflows/ci.yml); local ~3–5 s; **workflow ainda não executado no GitHub** |
+| [x] CI roda caos reduzido (100) em < 5 min | [`.github/workflows/ci.yml`](.github/workflows/ci.yml); [run 43868357416](https://github.com/wesleyplago/payops-agent/actions/runs/43868357416): job inteiro 51 s, caos 100 em **6 s** |
 | [x] Caso que falhou e foi corrigido | [INCIDENT-001](docs/INCIDENT-001-concurrent-retry.md) — 19 `APPROVAL_EXPIRED` sob retry concorrente |
 
 ## Mapa do repositório
@@ -443,8 +443,9 @@ Execução independente sobre o mesmo código, Postgres 16 via Docker Desktop, N
 Os p95 diferem da execução de 2026-10-23 (máquina/carga); as contagens de segurança são idênticas.
 Os relatórios em `reports/` continuam sendo os de 2026-10-23, para casar com o trace ID e a captura.
 
-**Ainda não comprovado:** o workflow de CI nunca rodou no GitHub (o diretório não é um repositório
-git com remote). O tempo "< 5 min" é inferido do tempo local (~3 s para 100 execuções).
+**CI no GitHub:** o primeiro run falhou (ver abaixo); após a correção,
+[run 43868357416](https://github.com/wesleyplago/payops-agent/actions/runs/43868357416) passou em 51 s,
+com o caos de 100 execuções em 6 s.
 
 Correções feitas nesta reverificação:
 
