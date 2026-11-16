@@ -21,7 +21,8 @@
     "injection": "tsx scripts/run-injection.ts",
     "report:ledger": "tsx scripts/ledger-sweep.ts",
     "trace:export": "tsx scripts/export-trace.ts",
-    "verify": "pnpm run typecheck && pnpm test && pnpm run chaos -- --runs 100 && pnpm run injection"
+    "verify": "pnpm run typecheck && pnpm test && pnpm run chaos -- --runs 100 && pnpm run injection",
+    "console": "tsx scripts/console.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.0",

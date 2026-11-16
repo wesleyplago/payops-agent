@@ -151,6 +151,27 @@ export class AgentRuntime {
           );
         }
 
+        // Replay probe (INCIDENT-002). The ledger checks the idempotency key
+        // BEFORE the approval token: a committed key returns the stored
+        // response, a reused key with other arguments returns
+        // IDEMPOTENCY_CONFLICT, and a new key fails closed with
+        // APPROVAL_REQUIRED before any side effect. Without this probe an agent
+        // retry after apparent success asked for a second approval and failed
+        // instead of replaying, pushing callers towards a new key.
+        const prior = await this.tools.execute(
+          decision.tool,
+          { ...business, idempotency_key: idempotencyKey },
+          ctx,
+        );
+        if (prior.ok) {
+          toolCalls.push(toTrace(decision.tool, prior));
+          return this.finish(request, scan, toolCalls, prior.data, 'completed', undefined, usage, modelPath, options);
+        }
+        if (prior.error.code !== 'APPROVAL_REQUIRED') {
+          toolCalls.push(toTrace(decision.tool, prior));
+          return this.finish(request, scan, toolCalls, undefined, 'failed', prior.error, usage, modelPath, options);
+        }
+
         const approval = await this.tools.execute(
           'request_approval',
           {
@@ -164,7 +185,7 @@ export class AgentRuntime {
         toolCalls.push(toTrace('request_approval', approval));
         if (!approval.ok) {
           status = approval.error.code === 'APPROVAL_DENIED' ? 'denied' : 'failed';
-          return this.finish(request, scan, toolCalls, undefined, status, undefined, usage, modelPath, options);
+          return this.finish(request, scan, toolCalls, undefined, status, approval.error, usage, modelPath, options);
         }
         const token = (approval.data as { token?: string }).token;
         if (!token) {
@@ -190,7 +211,7 @@ export class AgentRuntime {
           error_code: err.code,
         });
         status = err.code.startsWith('APPROVAL') ? 'denied' : 'failed';
-        return this.finish(request, scan, toolCalls, undefined, status, undefined, usage, modelPath, options);
+        return this.finish(request, scan, toolCalls, undefined, status, { code: err.code, message: err.message }, usage, modelPath, options);
       }
       throw err;
     }

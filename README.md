@@ -332,6 +332,13 @@ pnpm run injection
 
 Tempo local observado: suíte completa em **~9–15 s**; caos de 100 execuções em **~3–5 s**; caos de 1.000 execuções em **~13 s**.
 
+### Usar pelo console interativo
+
+Com o compose no ar, `pnpm run console` abre um menu em que você faz os dois papéis: o operador que
+pede ao agente e o humano que aprova ou nega no canal separado. Dá para cobrar, estornar, mandar Pix,
+ver saldo e faturas, repetir a última operação com a mesma chave (replay) e plantar um documento
+malicioso no KB. Cada resposta traz o link do trace no Jaeger (`http://127.0.0.1:16686`).
+
 ### Endpoints
 
 | Método | Rota | Auth |
@@ -387,6 +394,7 @@ curl -X POST http://127.0.0.1:3000/internal/approvals/<id>/decision \
 | [x] `docker compose up` sobe app + Postgres + Jaeger | `docker compose ps` com os 3 healthy; trace no Jaeger |
 | [x] CI roda caos reduzido (100) em < 5 min | [`.github/workflows/ci.yml`](.github/workflows/ci.yml); [run 43868357416](https://github.com/wesleyplago/payops-agent/actions/runs/43868357416): job inteiro 51 s, caos 100 em **6 s** |
 | [x] Caso que falhou e foi corrigido | [INCIDENT-001](docs/INCIDENT-001-concurrent-retry.md) — 19 `APPROVAL_EXPIRED` sob retry concorrente |
+| [x] Segundo caso, achado usando o sistema | [INCIDENT-002](docs/INCIDENT-002-agent-retry-no-replay.md) — retry pelo agente pedia nova aprovação em vez de fazer replay |
 
 ## Mapa do repositório
 
