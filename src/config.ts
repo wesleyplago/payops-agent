@@ -28,9 +28,14 @@ const EnvSchema = z.object({
   LLM_OUTPUT_PRICE_PER_1M: z.coerce.number().nonnegative().default(0),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
   DB_POOL_MAX: z.coerce.number().int().positive().default(20),
+  // Browser origins allowed to call the API (the portfolio/payops micro-frontends).
+  CORS_ORIGINS: z
+    .string()
+    .default('http://localhost:5180,http://localhost:5181,http://127.0.0.1:5180,http://127.0.0.1:5181'),
 });
 
 export type AppConfig = {
+  corsOrigins: string[];
   port: number;
   databaseUrl: string;
   approverSecret: string;
@@ -62,6 +67,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     otelServiceName: parsed.OTEL_SERVICE_NAME,
     otelExporterEndpoint: parsed.OTEL_EXPORTER_OTLP_ENDPOINT,
     otelTraceFile: parsed.OTEL_TRACE_FILE,
+    corsOrigins: parsed.CORS_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean),
     sendPixAllowlist: parsed.SEND_PIX_ALLOWLIST.split(',')
       .map((v) => v.trim())
       .filter(Boolean),

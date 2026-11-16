@@ -32,6 +32,23 @@ describe('Hono boundary', () => {
     expect((await app.request('/readyz')).status).toBe(200);
   });
 
+  it('answers CORS preflight only for allowed browser origins, before auth', async () => {
+    const preflight = (origin: string) =>
+      app.request('/v1/agent/execute', {
+        method: 'OPTIONS',
+        headers: {
+          origin,
+          'access-control-request-method': 'POST',
+          'access-control-request-headers': 'authorization,content-type',
+        },
+      });
+    const allowed = await preflight('http://localhost:5180');
+    expect(allowed.status).toBe(204);
+    expect(allowed.headers.get('access-control-allow-origin')).toBe('http://localhost:5180');
+    const denied = await preflight('https://evil.example');
+    expect(denied.headers.get('access-control-allow-origin')).toBeNull();
+  });
+
   it('rejects missing agent authentication', async () => {
     const response = await app.request('/v1/agent/execute', {
       method: 'POST',

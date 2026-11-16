@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { timingSafeEqual } from 'node:crypto';
 import type { Knex } from 'knex';
 import { ZodError } from 'zod';
@@ -19,6 +20,18 @@ export type AppDependencies = {
 
 export function createApp(deps: AppDependencies): Hono {
   const app = new Hono();
+
+  // Registered first so browser preflights (OPTIONS) never reach the auth middleware.
+  app.use(
+    '*',
+    cors({
+      origin: (origin) => (deps.config.corsOrigins.includes(origin) ? origin : null),
+      allowMethods: ['GET', 'POST', 'OPTIONS'],
+      allowHeaders: ['authorization', 'content-type', 'x-approver-key'],
+      exposeHeaders: ['x-trace-id'],
+      maxAge: 600,
+    }),
+  );
 
   app.use('*', async (c, next) => {
     const started = performance.now();
